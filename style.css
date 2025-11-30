@@ -491,3 +491,50 @@ footer {
     40% { content: '..'; }
     60%, 100% { content: '...'; }
 }
+
+
+/* Savings box */
+.savings-box {
+    background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+    border: 2px solid #48bb78;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+}
+
+.savings-box h3 {
+    color: #2d3748;
+    margin: 0;
+}
+
+/* Alert styles update */
+.alert h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.alert ul {
+    text-align: left;
+}
+
+
+/* Meal select */
+.meal-select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1em;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.meal-select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.meal-select:hover {
+    border-color: #cbd5e0;
+}

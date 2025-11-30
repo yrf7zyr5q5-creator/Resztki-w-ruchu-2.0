@@ -227,10 +227,28 @@ function displayRecipeDetails(details, recipe) {
     if (details.vegan) html += `<div class="recipe-detail-meta-item">🌱 Wegańskie</div>`;
     html += `</div>`;
     
+    // Brakujące składniki (jeśli są)
+    if (recipe.brakujace && recipe.brakujace.length > 0) {
+        html += `<div class="recipe-section">`;
+        html += `<div class="alert alert-warning">`;
+        html += `<h3 style="margin-bottom: 10px;">🛒 Musisz dokupić:</h3>`;
+        html += `<ul style="margin: 0; padding-left: 20px;">`;
+        recipe.brakujace.forEach(ing => {
+            html += `<li style="margin: 5px 0;">${ing}</li>`;
+        });
+        html += `</ul>`;
+        html += `</div></div>`;
+    } else {
+        html += `<div class="recipe-section">`;
+        html += `<div class="alert alert-success">`;
+        html += `✨ <strong>Masz wszystkie składniki!</strong> Możesz zacząć gotować od razu!`;
+        html += `</div></div>`;
+    }
+    
     // Składniki
     if (details.extendedIngredients && details.extendedIngredients.length > 0) {
         html += `<div class="recipe-section">`;
-        html += `<h3>📝 Składniki:</h3>`;
+        html += `<h3>📝 Wszystkie składniki:</h3>`;
         html += `<ul class="ingredients-list">`;
         details.extendedIngredients.forEach(ing => {
             html += `<li>${ing.original}</li>`;
@@ -258,6 +276,16 @@ function displayRecipeDetails(details, recipe) {
         html += `</div>`;
     }
     
+    // Oszczędności
+    const cena = recipe.cena_restauracja || 30;
+    html += `<div class="recipe-section">`;
+    html += `<div class="savings-box">`;
+    html += `<h3 style="margin-bottom: 10px;">💰 Oszczędności</h3>`;
+    html += `<p style="font-size: 1.2em; margin: 10px 0;">Gotując w domu zaoszczędzisz około:</p>`;
+    html += `<p style="font-size: 2.5em; font-weight: bold; color: #48bb78; margin: 10px 0;">${cena} zł</p>`;
+    html += `<p style="font-size: 0.95em; color: #718096;">w porównaniu z restauracją/dostawą (Wolt, Uber Eats)</p>`;
+    html += `</div></div>`;
+    
     // Link do źródła
     if (details.sourceUrl) {
         html += `<a href="${details.sourceUrl}" target="_blank" class="recipe-link">🔗 Zobacz oryginalny przepis</a>`;
@@ -265,7 +293,13 @@ function displayRecipeDetails(details, recipe) {
     
     // Przycisk "Robię to!"
     html += `<br><br>`;
-    html += `<button class="recipe-button" onclick="showCongratulations(${JSON.stringify(recipe).replace(/"/g, '&quot;')}, ${JSON.stringify(recipe.brakujace || [])})">🎉 Robię to!</button>`;
+    const recipeData = {
+        id: recipe.id,
+        nazwa: details.title,
+        cena_restauracja: cena,
+        brakujace: recipe.brakujace || []
+    };
+    html += `<button class="recipe-button" style="width: 100%; padding: 20px; font-size: 1.3em;" onclick='showCongratulationsFromModal(${JSON.stringify(recipeData)})'>🎉 Robię to!</button>`;
     
     detailsDiv.innerHTML = html;
 }
@@ -283,6 +317,33 @@ function displayLocalRecipe(recipe) {
     if (recipe.lunchbox) html += `<div class="recipe-detail-meta-item">📦 Lunchbox</div>`;
     html += `</div>`;
     
+    // Brakujące składniki (oblicz na podstawie wybranych)
+    const brakujace = [];
+    if (recipe.skladniki) {
+        recipe.skladniki.forEach(skladnik => {
+            if (!wybraneSkładniki.has(skladnik)) {
+                brakujace.push(skladnik);
+            }
+        });
+    }
+    
+    if (brakujace.length > 0) {
+        html += `<div class="recipe-section">`;
+        html += `<div class="alert alert-warning">`;
+        html += `<h3 style="margin-bottom: 10px;">🛒 Musisz dokupić:</h3>`;
+        html += `<ul style="margin: 0; padding-left: 20px;">`;
+        brakujace.forEach(ing => {
+            html += `<li style="margin: 5px 0;">${ing}</li>`;
+        });
+        html += `</ul>`;
+        html += `</div></div>`;
+    } else {
+        html += `<div class="recipe-section">`;
+        html += `<div class="alert alert-success">`;
+        html += `✨ <strong>Masz wszystkie składniki!</strong> Możesz zacząć gotować od razu!`;
+        html += `</div></div>`;
+    }
+    
     html += `<div class="recipe-section">`;
     html += `<h3>📝 Składniki:</h3>`;
     html += `<ul class="ingredients-list">`;
@@ -291,11 +352,38 @@ function displayLocalRecipe(recipe) {
     });
     html += `</ul></div>`;
     
-    html += `<div class="alert alert-warning">`;
-    html += `ℹ️ To przepis z lokalnej bazy. Szczegółowe instrukcje będą dostępne wkrótce!`;
-    html += `</div>`;
+    // Instrukcje krok po kroku (jeśli są)
+    if (recipe.instrukcje && recipe.instrukcje.length > 0) {
+        html += `<div class="recipe-section">`;
+        html += `<h3>👨‍🍳 Instrukcje krok po kroku:</h3>`;
+        html += `<ol class="instructions-list">`;
+        recipe.instrukcje.forEach(krok => {
+            html += `<li>${krok}</li>`;
+        });
+        html += `</ol></div>`;
+    } else {
+        html += `<div class="alert alert-warning">`;
+        html += `ℹ️ To prosty przepis studencki. Przygotuj składniki i gotuj według własnego doświadczenia!`;
+        html += `</div>`;
+    }
     
-    html += `<button class="recipe-button" onclick="showCongratulations(${JSON.stringify(recipe).replace(/"/g, '&quot;')}, ${JSON.stringify(recipe.brakujace || [])})">🎉 Robię to!</button>`;
+    // Oszczędności
+    const cena = recipe.cena_restauracja || 30;
+    html += `<div class="recipe-section">`;
+    html += `<div class="savings-box">`;
+    html += `<h3 style="margin-bottom: 10px;">💰 Oszczędności</h3>`;
+    html += `<p style="font-size: 1.2em; margin: 10px 0;">Gotując w domu zaoszczędzisz około:</p>`;
+    html += `<p style="font-size: 2.5em; font-weight: bold; color: #48bb78; margin: 10px 0;">${cena} zł</p>`;
+    html += `<p style="font-size: 0.95em; color: #718096;">w porównaniu z restauracją/dostawą (Wolt, Uber Eats)</p>`;
+    html += `</div></div>`;
+    
+    const recipeData = {
+        id: recipe.id,
+        nazwa: recipe.nazwa,
+        cena_restauracja: cena,
+        brakujace: brakujace
+    };
+    html += `<button class="recipe-button" style="width: 100%; padding: 20px; font-size: 1.3em;" onclick='showCongratulationsFromModal(${JSON.stringify(recipeData)})'>🎉 Robię to!</button>`;
     
     detailsDiv.innerHTML = html;
 }
@@ -313,3 +401,57 @@ document.addEventListener('click', (e) => {
         closeRecipeModal();
     }
 });
+
+
+// Pokaż gratulacje z modala przepisu
+function showCongratulationsFromModal(recipeData) {
+    // Zamknij modal przepisu
+    closeRecipeModal();
+    
+    // Poczekaj chwilę na animację
+    setTimeout(() => {
+        const cena = recipeData.cena_restauracja || 30;
+        const brakujace = recipeData.brakujace || [];
+        
+        let message = `<div class="modal-title">🎉 ${brakujace.length === 0 ? 'Brawo!' : 'Świetny wybór!'}</div>`;
+        message += `<div class="modal-text">`;
+        message += `<strong>Gotujesz: ${recipeData.nazwa}</strong><br><br>`;
+        message += `💰 <strong>Zaoszczędzisz około ${cena} zł</strong><br>`;
+        message += `(w porównaniu z restauracją/dostawą)<br><br>`;
+        
+        if (brakujace.length > 0) {
+            message += `📝 Pamiętaj dokupić: ${brakujace.slice(0, 3).join(', ')}<br>`;
+            if (brakujace.length > 3) {
+                message += `<em>(i ${brakujace.length - 3} więcej)</em><br>`;
+            }
+            message += `<br>`;
+        }
+        
+        message += `✨ ${brakujace.length === 0 ? 'Nie zmarnowałaś jedzenia z lodówki!' : 'Wykorzystujesz to, co masz w lodówce!'}<br>`;
+        message += `🌍 Pomagasz środowisku!<br>`;
+        if (brakujace.length === 0) {
+            message += `💪 Rozwijasz swoje umiejętności kulinarne!`;
+        }
+        message += `</div>`;
+        message += `<button class="modal-close" onclick="closeCongratsModal()">OK</button>`;
+        
+        // Pokaż modal gratulacji
+        const modal = document.createElement('div');
+        modal.className = 'modal show';
+        modal.id = 'congratsModal';
+        modal.innerHTML = `<div class="modal-content">${message}</div>`;
+        modal.onclick = (e) => {
+            if (e.target === modal) closeCongratsModal();
+        };
+        
+        document.body.appendChild(modal);
+    }, 300);
+}
+
+// Zamknij modal gratulacji
+function closeCongratsModal() {
+    const modal = document.getElementById('congratsModal');
+    if (modal) {
+        modal.remove();
+    }
+}

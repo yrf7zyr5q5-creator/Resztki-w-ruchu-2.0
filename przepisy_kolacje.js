@@ -1,0 +1,39 @@
+// Dodatkowe przepisy - część 3 (obiady wegańskie + kolacje - 60 przepisów)
+const przepisyKolacje = [
+    // OBIADY WEGAŃSKIE (20 przepisów)
+    {id: 111, nazwa: "Buddha bowl", skladniki: ["ryż", "ciecierzyca w puszce", "awokado", "papryka"], czas: "powyżej 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 32, posilek: "obiad"},
+    {id: 112, nazwa: "Falafel z hummusem", skladniki: ["ciecierzyca w puszce", "czosnek", "cebula", "przyprawy"], czas: "powyżej 15 min", porcje: 3, lunchbox: true, dieta: "wegańska", cena_restauracja: 28, posilek: "obiad"},
+    {id: 113, nazwa: "Pad Thai wegański", skladniki: ["makaron ryżowy", "tofu", "kiełki", "sos sojowy"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 35, posilek: "obiad"},
+    {id: 114, nazwa: "Chili sin carne", skladniki: ["fasola czerwona", "kukurydza", "pomidory w puszce", "papryka"], czas: "powyżej 15 min", porcje: 4, lunchbox: true, dieta: "wegańska", cena_restauracja: 30, posilek: "obiad", instrukcje: ["Pokrój paprykę i cebulę w kostkę", "Podsmaż warzywa na oliwie 5 minut", "Dodaj czosnek, chili, paprykę słodką, kumin", "Wlej pomidory z puszki", "Dodaj odsączoną fasolę i kukurydzę", "Gotuj 20 minut na małym ogniu", "Dopraw solą, pieprzem, odrobiną cukru", "Podawaj z ryżem lub nachos", "Posyp kolendrą i dodaj śmietanę (opcjonalnie)"]},
+    {id: 115, nazwa: "Makaron z pesto bazyliowym", skladniki: ["makaron", "bazylia", "orzechy", "czosnek", "oliwa"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 28, posilek: "obiad"},
+    {id: 116, nazwa: "Zupa krem z dyni", skladniki: ["dynia", "cebula", "mleko kokosowe", "imbir"], czas: "powyżej 15 min", porcje: 3, lunchbox: true, dieta: "wegańska", cena_restauracja: 24, posilek: "obiad"},
+    {id: 117, nazwa: "Tofu w sosie teriyaki", skladniki: ["tofu", "sos sojowy", "miód", "czosnek", "ryż"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 32, posilek: "obiad", instrukcje: ["Pokrój tofu w kostki, osusz ręcznikiem", "Wymieszaj sos: sos sojowy + miód + czosnek + imbir", "Rozgrzej olej na patelni", "Smaż tofu na złoty kolor z każdej strony", "Wlej sos teriyaki", "Gotuj 2-3 minuty aż sos zgęstnieje", "Ugotuj ryż", "Podawaj tofu na ryżu", "Posyp sezamem i szczypiorkiem"]},
+    {id: 118, nazwa: "Burger wegański", skladniki: ["bułka", "burger roślinny", "sałata", "pomidor"], czas: "do 15 min", porcje: 2, lunchbox: false, dieta: "wegańska", cena_restauracja: 30, posilek: "obiad"},
+    {id: 119, nazwa: "Makaron z sosem pomidorowo-bazyliowym", skladniki: ["makaron", "pomidory w puszce", "bazylia", "czosnek"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 26, posilek: "obiad"},
+    {id: 120, nazwa: "Risotto z dynią", skladniki: ["ryż", "dynia", "cebula", "mleko kokosowe"], czas: "powyżej 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 30, posilek: "obiad"},
+    {id: 121, nazwa: "Kotlety z ciecierzycy", skladniki: ["ciecierzyca w puszce", "cebula", "czosnek", "bułka tarta"], czas: "powyżej 15 min", porcje: 3, lunchbox: true, dieta: "wegańska", cena_restauracja: 26, posilek: "obiad"},
+    {id: 122, nazwa: "Makaron z warzywami", skladniki: ["makaron", "cukinia", "papryka", "pomidor", "czosnek"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 28, posilek: "obiad"},
+    {id: 123, nazwa: "Zupa minestrone", skladniki: ["fasola czerwona", "makaron", "pomidory w puszce", "cebula"], czas: "powyżej 15 min", porcje: 4, lunchbox: true, dieta: "wegańska", cena_restauracja: 24, posilek: "obiad"},
+    {id: 124, nazwa: "Tacos wegańskie", skladniki: ["tortilla", "fasola czerwona", "kukurydza", "awokado"], czas: "do 15 min", porcje: 2, lunchbox: false, dieta: "wegańska", cena_restauracja: 28, posilek: "obiad"},
+    {id: 125, nazwa: "Curry z warzywami", skladniki: ["mleczko kokosowe", "papryka", "cukinia", "przyprawa curry", "ryż"], czas: "powyżej 15 min", porcje: 3, lunchbox: true, dieta: "wegańska", cena_restauracja: 32, posilek: "obiad"},
+    {id: 126, nazwa: "Sałatka z quinoa", skladniki: ["quinoa", "ogórek", "pomidor", "ciecierzyca w puszce"], czas: "powyżej 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 30, posilek: "obiad"},
+    {id: 127, nazwa: "Zupa krem z brokułów", skladniki: ["brokuły", "ziemniaki", "cebula", "mleko kokosowe"], czas: "powyżej 15 min", porcje: 3, lunchbox: true, dieta: "wegańska", cena_restauracja: 22, posilek: "obiad"},
+    {id: 128, nazwa: "Makaron z cukinią i czosnkiem", skladniki: ["makaron", "cukinia", "czosnek", "oliwa"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 24, posilek: "obiad"},
+    {id: 129, nazwa: "Pierogi z kapustą i grzybami", skladniki: ["mąka", "kapusta", "pieczarki", "cebula"], czas: "powyżej 15 min", porcje: 3, lunchbox: true, dieta: "wegańska", cena_restauracja: 26, posilek: "obiad"},
+    {id: 130, nazwa: "Zupa z soczewicy", skladniki: ["soczewica", "marchew", "cebula", "pomidory w puszce"], czas: "powyżej 15 min", porcje: 4, lunchbox: true, dieta: "wegańska", cena_restauracja: 22, posilek: "obiad"},
+    
+    // KOLACJE (30 przepisów - mix diet)
+    {id: 131, nazwa: "Sałatka Cezar", skladniki: ["sałata", "kurczak", "grzanki", "ser żółty"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "standard", cena_restauracja: 32, posilek: "kolacja", instrukcje: ["Usmaż lub ugotuj kurczaka, pokrój w paski", "Porwij sałatę na kawałki", "Zrób grzanki: pokrój chleb w kostki, posmaż na patelni", "Przygotuj sos: majonez + czosnek + sok z cytryny + parmezan", "Wymieszaj sałatę z sosem", "Dodaj kurczaka i grzanki", "Posyp tartym parmezanem", "Podawaj od razu"]},
+    {id: 132, nazwa: "Tortilla z kurczakiem", skladniki: ["tortilla", "kurczak", "sałata", "pomidor", "sos czosnkowy"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "standard", cena_restauracja: 28, posilek: "kolacja"},
+    {id: 133, nazwa: "Sałatka z tuńczykiem", skladniki: ["sałata", "tuńczyk w puszce", "jajka gotowane", "pomidor"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "standard", cena_restauracja: 26, posilek: "kolacja"},
+    {id: 134, nazwa: "Kanapki z pastą z awokado", skladniki: ["chleb", "awokado", "pomidor", "jajka"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegetariańska", cena_restauracja: 22, posilek: "kolacja"},
+    {id: 135, nazwa: "Sałatka caprese", skladniki: ["pomidor", "mozarella", "bazylia", "oliwa"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegetariańska", cena_restauracja: 24, posilek: "kolacja"},
+    {id: 136, nazwa: "Wrap z falafel", skladniki: ["tortilla", "falafel", "sałata", "hummus"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegańska", cena_restauracja: 26, posilek: "kolacja"},
+    {id: 137, nazwa: "Sałatka z fetą i oliwkami", skladniki: ["sałata", "ser feta", "oliwki", "ogórek", "pomidor"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegetariańska", cena_restauracja: 28, posilek: "kolacja"},
+    {id: 138, nazwa: "Kanapki z pastą jajeczną", skladniki: ["chleb", "jajka gotowane", "majonez", "szczypiorek"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "wegetariańska", cena_restauracja: 18, posilek: "kolacja"},
+    {id: 139, nazwa: "Sałatka z kurczakiem i awokado", skladniki: ["sałata", "kurczak", "awokado", "pomidor"], czas: "do 15 min", porcje: 2, lunchbox: true, dieta: "standard", cena_restauracja: 32, posilek: "kolacja"},
+    {id: 140, nazwa: "Bruschetta", skladniki: ["chleb", "pomidor", "czosnek", "bazylia", "oliwa"], czas: "do 15 min", porcje: 2, lunchbox: false, dieta: "wegańska", cena_restauracja: 20, posilek: "kolacja"}
+];
+
+// Połącz wszystkie przepisy
+const wszystkiePrzepisy = [...przepisy, ...przepisyDodatkowe, ...przepisyObiady, ...przepisyKolacje];

@@ -53,11 +53,13 @@ async function searchRecipes() {
     const filterVegetarian = document.getElementById('filterVegetarian').checked;
     const filterQuick = document.getElementById('filterQuick').checked;
     const filterLunchbox = document.getElementById('filterLunchbox').checked;
+    const filterMeal = document.getElementById('filterMeal').value;
     
     const filters = {
         vegetarian: filterVegetarian,
         quick: filterQuick,
-        lunchbox: filterLunchbox
+        lunchbox: filterLunchbox,
+        meal: filterMeal
     };
     
     // Jeśli używamy API
@@ -87,10 +89,13 @@ async function searchRecipes() {
         return;
     }
     
+    // Użyj rozszerzonej bazy jeśli istnieje
+    const bazaPrzepisow = typeof wszystkiePrzepisy !== 'undefined' ? wszystkiePrzepisy : przepisy;
+    
     // Znajdź pasujące przepisy
     let pasujące = [];
     
-    przepisy.forEach(przepis => {
+    bazaPrzepisow.forEach(przepis => {
         // Sprawdź filtry
         if (filterVegetarian && przepis.dieta !== 'wegetariańska' && przepis.dieta !== 'wegańska') {
             return;
@@ -99,6 +104,9 @@ async function searchRecipes() {
             return;
         }
         if (filterLunchbox && !przepis.lunchbox) {
+            return;
+        }
+        if (filterMeal && przepis.posilek && przepis.posilek !== filterMeal) {
             return;
         }
         
