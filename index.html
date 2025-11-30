@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍳 Resztki w Ruchu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Nagłówek -->
+        <header>
+            <h1>🍳 Resztki w Ruchu</h1>
+            <p class="subtitle">Gotuj z tego, co masz w lodówce!</p>
+        </header>
+
+        <!-- Sekcja składników -->
+        <section class="section">
+            <h2>🥘 Co masz w lodówce?</h2>
+            <p>Zaznacz składniki, które posiadasz:</p>
+            
+            <div class="ingredients-grid" id="ingredientsGrid">
+                <!-- Składniki będą dodane przez JavaScript -->
+            </div>
+        </section>
+
+        <!-- Filtry -->
+        <section class="section">
+            <h2>🔍 Filtry</h2>
+            <div class="filters">
+                <label class="filter-item">
+                    <input type="checkbox" id="filterVegetarian">
+                    <span>🥗 Tylko Wegetariańskie/Wegańskie</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" id="filterQuick">
+                    <span>⏱️ Szybkie (do 15 min)</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" id="filterLunchbox">
+                    <span>📦 Dobre do pudełka</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Przycisk szukaj -->
+        <button class="search-button" onclick="searchRecipes()">
+            🔍 SZUKAJ OBIADU
+        </button>
+
+        <!-- Wyniki -->
+        <section class="section" id="resultsSection" style="display: none;">
+            <h2>📋 Wyniki wyszukiwania</h2>
+            <div id="results"></div>
+        </section>
+
+        <!-- Stopka -->
+        <footer>
+            <p>🍳 Resztki w Ruchu - Gotuj mądrze, oszczędzaj pieniądze!</p>
+            <p>Średnia oszczędność: 20-40 zł na posiłek 💰</p>
+        </footer>
+    </div>
+
+    <script src="przepisy.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
