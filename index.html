@@ -24,6 +24,26 @@
             </div>
         </section>
 
+        <!-- Źródło przepisów -->
+        <section class="section">
+            <h2>📚 Źródło przepisów</h2>
+            <div class="source-toggle">
+                <button class="source-btn active" id="btnLocal" onclick="switchSource('local')">
+                    📚 Lokalna baza (50 przepisów)
+                </button>
+                <button class="source-btn" id="btnAPI" onclick="switchSource('api')">
+                    🌐 API Spoonacular (tysiące przepisów)
+                </button>
+            </div>
+            
+            <div id="apiKeySection" style="display: none; margin-top: 20px;">
+                <input type="password" id="apiKeyInput" placeholder="Wklej tutaj klucz API Spoonacular" class="api-input">
+                <p style="font-size: 0.9em; color: #718096; margin-top: 10px;">
+                    📝 Zarejestruj się na <a href="https://spoonacular.com/food-api" target="_blank">spoonacular.com/food-api</a> (darmowy plan: 150 zapytań/dzień)
+                </p>
+            </div>
+        </section>
+
         <!-- Filtry -->
         <section class="section">
             <h2>🔍 Filtry</h2>
@@ -61,7 +81,16 @@
         </footer>
     </div>
 
+    <!-- Modal dla przepisu -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content recipe-modal">
+            <span class="modal-close-x" onclick="closeRecipeModal()">&times;</span>
+            <div id="recipeDetails"></div>
+        </div>
+    </div>
+
     <script src="przepisy.js"></script>
+    <script src="api.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

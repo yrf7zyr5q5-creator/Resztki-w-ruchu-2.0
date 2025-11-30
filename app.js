@@ -38,7 +38,7 @@ function toggleIngredient(składnik, element) {
 }
 
 // Wyszukaj przepisy
-function searchRecipes() {
+async function searchRecipes() {
     const resultsSection = document.getElementById('resultsSection');
     const resultsDiv = document.getElementById('results');
     
@@ -53,6 +53,39 @@ function searchRecipes() {
     const filterVegetarian = document.getElementById('filterVegetarian').checked;
     const filterQuick = document.getElementById('filterQuick').checked;
     const filterLunchbox = document.getElementById('filterLunchbox').checked;
+    
+    const filters = {
+        vegetarian: filterVegetarian,
+        quick: filterQuick,
+        lunchbox: filterLunchbox
+    };
+    
+    // Jeśli używamy API
+    if (currentSource === 'api') {
+        resultsDiv.innerHTML = '<div class="loading">Szukam przepisów w API Spoonacular</div>';
+        resultsSection.style.display = 'block';
+        
+        const result = await searchRecipesAPI(wybraneSkładniki, filters);
+        
+        if (result.error) {
+            resultsDiv.innerHTML = `<div class="alert alert-error">${result.message}</div>`;
+            return;
+        }
+        
+        if (result.recipes.length === 0) {
+            resultsDiv.innerHTML = '<div class="alert alert-error">😔 Nie znaleziono pasujących przepisów. Spróbuj zmienić składniki lub filtry.</div>';
+        } else {
+            resultsDiv.innerHTML = `<div class="alert alert-success">✅ Znaleziono ${result.recipes.length} przepisów z API!</div>`;
+            
+            result.recipes.forEach(recipe => {
+                const card = createRecipeCard(recipe, recipe.brakujace || [], recipe.procent);
+                resultsDiv.appendChild(card);
+            });
+        }
+        
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+        return;
+    }
     
     // Znajdź pasujące przepisy
     let pasujące = [];
@@ -153,12 +186,28 @@ function createRecipeCard(przepis, brakujące, procent) {
     }
     card.appendChild(missing);
     
-    // Przycisk
-    const button = document.createElement('button');
-    button.className = 'recipe-button';
-    button.textContent = '🎉 Robię to!';
-    button.onclick = () => showCongratulations(przepis, brakujące);
-    card.appendChild(button);
+    // Przyciski
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.style.display = 'flex';
+    buttonsDiv.style.gap = '10px';
+    buttonsDiv.style.flexWrap = 'wrap';
+    
+    const detailsButton = document.createElement('button');
+    detailsButton.className = 'recipe-button';
+    detailsButton.textContent = '📖 Zobacz przepis';
+    detailsButton.style.flex = '1';
+    detailsButton.onclick = () => showRecipeDetails(przepis);
+    buttonsDiv.appendChild(detailsButton);
+    
+    const cookButton = document.createElement('button');
+    cookButton.className = 'recipe-button';
+    cookButton.textContent = '🎉 Robię to!';
+    cookButton.style.flex = '1';
+    cookButton.style.background = '#48bb78';
+    cookButton.onclick = () => showCongratulations(przepis, brakujące);
+    buttonsDiv.appendChild(cookButton);
+    
+    card.appendChild(buttonsDiv);
     
     return card;
 }
