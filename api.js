@@ -49,16 +49,32 @@ function switchSource(source) {
     
     const btnLocal = document.getElementById('btnLocal');
     const btnAPI = document.getElementById('btnAPI');
+    const btnAI = document.getElementById('btnAI');
     const apiKeySection = document.getElementById('apiKeySection');
+    const aiKeySection = document.getElementById('aiKeySection');
+    const searchButtons = document.getElementById('searchButtons');
+    const aiButtons = document.getElementById('aiButtons');
+    
+    // Reset wszystkich
+    btnLocal.classList.remove('active');
+    btnAPI.classList.remove('active');
+    btnAI.classList.remove('active');
+    apiKeySection.style.display = 'none';
+    aiKeySection.style.display = 'none';
+    searchButtons.style.display = 'none';
+    aiButtons.style.display = 'none';
     
     if (source === 'local') {
         btnLocal.classList.add('active');
-        btnAPI.classList.remove('active');
-        apiKeySection.style.display = 'none';
-    } else {
-        btnLocal.classList.remove('active');
+        searchButtons.style.display = 'block';
+    } else if (source === 'api') {
         btnAPI.classList.add('active');
         apiKeySection.style.display = 'block';
+        searchButtons.style.display = 'block';
+    } else if (source === 'ai') {
+        btnAI.classList.add('active');
+        aiKeySection.style.display = 'block';
+        aiButtons.style.display = 'block';
     }
 }
 
@@ -291,15 +307,17 @@ function displayRecipeDetails(details, recipe) {
         html += `<a href="${details.sourceUrl}" target="_blank" class="recipe-link">🔗 Zobacz oryginalny przepis</a>`;
     }
     
-    // Przycisk "Robię to!"
-    html += `<br><br>`;
+    // Przyciski
+    html += `<div style="display: flex; gap: 10px; margin-top: 20px;">`;
+    html += `<button class="recipe-button" style="flex: 1;" onclick='addToFavorites(${JSON.stringify(recipe).replace(/'/g, "&#39;")})'>⭐ Dodaj do ulubionych</button>`;
     const recipeData = {
         id: recipe.id,
         nazwa: details.title,
         cena_restauracja: cena,
         brakujace: recipe.brakujace || []
     };
-    html += `<button class="recipe-button" style="width: 100%; padding: 20px; font-size: 1.3em;" onclick='showCongratulationsFromModal(${JSON.stringify(recipeData)})'>🎉 Robię to!</button>`;
+    html += `<button class="recipe-button" style="flex: 1; background: #48bb78;" onclick='showCongratulationsFromModal(${JSON.stringify(recipeData).replace(/'/g, "&#39;")})'>🎉 Robię to!</button>`;
+    html += `</div>`;
     
     detailsDiv.innerHTML = html;
 }
@@ -377,13 +395,17 @@ function displayLocalRecipe(recipe) {
     html += `<p style="font-size: 0.95em; color: #718096;">w porównaniu z restauracją/dostawą (Wolt, Uber Eats)</p>`;
     html += `</div></div>`;
     
+    // Przyciski
+    html += `<div style="display: flex; gap: 10px; margin-top: 20px;">`;
+    html += `<button class="recipe-button" style="flex: 1;" onclick='addToFavorites(${JSON.stringify(recipe).replace(/'/g, "&#39;")})'>⭐ Dodaj do ulubionych</button>`;
     const recipeData = {
         id: recipe.id,
         nazwa: recipe.nazwa,
         cena_restauracja: cena,
         brakujace: brakujace
     };
-    html += `<button class="recipe-button" style="width: 100%; padding: 20px; font-size: 1.3em;" onclick='showCongratulationsFromModal(${JSON.stringify(recipeData)})'>🎉 Robię to!</button>`;
+    html += `<button class="recipe-button" style="flex: 1; background: #48bb78;" onclick='showCongratulationsFromModal(${JSON.stringify(recipeData).replace(/'/g, "&#39;")})'>🎉 Robię to!</button>`;
+    html += `</div>`;
     
     detailsDiv.innerHTML = html;
 }

@@ -29,10 +29,16 @@
             <h2>📚 Źródło przepisów</h2>
             <div class="source-toggle">
                 <button class="source-btn active" id="btnLocal" onclick="switchSource('local')">
-                    📚 Lokalna baza (50 przepisów)
+                    📚 Lokalna baza (200 przepisów)
                 </button>
                 <button class="source-btn" id="btnAPI" onclick="switchSource('api')">
-                    🌐 API Spoonacular (tysiące przepisów)
+                    🌐 API Spoonacular (tysiące)
+                </button>
+                <button class="source-btn" id="btnAI" onclick="switchSource('ai')">
+                    🤖 Generator AI
+                </button>
+                <button class="source-btn" id="btnFavorites" onclick="showFavorites()">
+                    ⭐ Ulubione <span id="favoritesCount" style="display: none; background: #f59e0b; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.9em; margin-left: 5px;">0</span>
                 </button>
             </div>
             
@@ -41,6 +47,22 @@
                 <p style="font-size: 0.9em; color: #718096; margin-top: 10px;">
                     📝 Zarejestruj się na <a href="https://spoonacular.com/food-api" target="_blank">spoonacular.com/food-api</a> (darmowy plan: 150 zapytań/dzień)
                 </p>
+            </div>
+            
+            <div id="aiKeySection" style="display: none; margin-top: 20px;">
+                <input type="password" id="openaiKeyInput" placeholder="Wklej tutaj klucz API OpenAI" class="api-input">
+                <p style="font-size: 0.9em; color: #718096; margin-top: 10px;">
+                    🤖 Zarejestruj się na <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> (GPT-3.5: ~$0.002 za przepis)
+                </p>
+                <div style="background: #e6fffa; border-left: 4px solid #48bb78; padding: 15px; margin-top: 15px; border-radius: 5px;">
+                    <strong>🎯 Jak to działa:</strong>
+                    <ol style="margin: 10px 0 0 20px; line-height: 1.8;">
+                        <li>Zaznacz składniki które masz</li>
+                        <li>Kliknij "🤖 WYGENERUJ PRZEPIS Z AI"</li>
+                        <li>AI stworzy unikalny przepis z instrukcjami!</li>
+                        <li>Zapisz go w ulubionych ⭐</li>
+                    </ol>
+                </div>
             </div>
         </section>
 
@@ -75,10 +97,18 @@
             </div>
         </section>
 
-        <!-- Przycisk szukaj -->
-        <button class="search-button" onclick="searchRecipes()">
-            🔍 SZUKAJ OBIADU
-        </button>
+        <!-- Przyciski akcji -->
+        <div id="searchButtons">
+            <button class="search-button" onclick="searchRecipes()">
+                🔍 SZUKAJ OBIADU
+            </button>
+        </div>
+        
+        <div id="aiButtons" style="display: none;">
+            <button class="search-button" onclick="generateRecipe()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                🤖 WYGENERUJ PRZEPIS Z AI
+            </button>
+        </div>
 
         <!-- Wyniki -->
         <section class="section" id="resultsSection" style="display: none;">
@@ -105,6 +135,8 @@
     <script src="przepisy_dodatkowe.js"></script>
     <script src="przepisy_obiady.js"></script>
     <script src="przepisy_kolacje.js"></script>
+    <script src="favorites.js"></script>
+    <script src="ai_generator.js"></script>
     <script src="api.js"></script>
     <script src="app.js"></script>
 </body>
